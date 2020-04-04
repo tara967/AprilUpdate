@@ -7,11 +7,9 @@
 	<a href="${pageContext.request.contextPath}/addNewEmployee">Add
         Employee</a> |   <a
         href="${pageContext.request.contextPath}/getEmployees">Show
-        Employees</a> |   <u><h2 style="color: red;">
-            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-            </h3></u>
-
-    <form id="logoutForm" method="POST" action="${contextPath}/logout">
-    </form>
+        Employees</a> 
+          
+    | <a href="${contextPath}/logout"  >Logout
+    </a>
 
 </div>
