@@ -94,7 +94,7 @@ ApplicationListener<ContextRefreshedEvent>{
 		   
 		   
 		   
-		   SimpleDateFormat formatter=new SimpleDateFormat("dd/mm/yyyy HH:mm:ss", Locale.ENGLISH);  
+		   SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);  
 		
 		TimeTable timeTable=new TimeTable();
 		timeTable.setselectedDay(formatter.parse(sDate1));

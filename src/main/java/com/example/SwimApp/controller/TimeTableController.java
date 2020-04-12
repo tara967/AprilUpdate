@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -76,7 +77,11 @@ public class TimeTableController {
         {
         	
 			LocalDate localDate = slots.getBookedTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			int month = localDate.getMonth().getValue();
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(slots.getBookedTime());
+			int month = cal.get(Calendar.MONTH);
+			
 			int year=localDate.getYear();
 			slots.getBookedTime().setMonth(month);
 			slots.getBookedTime().setYear(year);
