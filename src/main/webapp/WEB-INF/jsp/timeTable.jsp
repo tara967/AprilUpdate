@@ -39,7 +39,7 @@
       
       
       function myFunction() {
-    	  alert("here");
+    	 
     	  fire_ajax_submit();
     	}
       
@@ -55,11 +55,10 @@
     	    var search = {}
     	    
     	    
-    	    search["bookedTime"] = $("#bookId").val();
+    	    search["slotId"] = $("#bookId").val();
 			search["personName"] = $("#personName").val();
+			
     	    $("#btn-search").prop("disabled", true);
-			alert(search["personName"]);
-			alert(search["bookedTime"]);
 			
 			
     	    $.ajax({
@@ -111,8 +110,8 @@
           <h4 class="modal-title">Modal header</h4>
       </div>
       <div class="modal-body">
-        <p>Selected Time Slot</p>
-     <input type="text" name="bookId" id="bookId" value=""/>
+
+     <input type="hidden" name="bookId" id="bookId" value=""/>
      <p> Enter Name</p>
      <input type="text" name="personName" id="personName" value=""/>
      
@@ -128,28 +127,41 @@
 
 
 <div>
+	<jsp:include page="menu.jsp" />
+	     
+<table border="1">
 
-<table>
+  <thead>
+    <tr>
+      <th scope="col">Time</th>
+      <th scope="col">Name</th>
+     
+      <th scope="col">Booked or not</th>
+    </tr>
+  </thead>
+  <tbody>
+
 		<c:forEach var="listValue" items="${slotList}">
 		
 		<tr>
-		<td>${listValue.bookedTime}</td>
+		<td>${listValue.bookedTime.date}-${listValue.bookedTime.month}-${listValue.bookedTime.year}  ${listValue.bookedTime.hours}:${listValue.bookedTime.minutes}
 		
-		<td>
-		 
+		<input type="hidden" id="slotId" name="slotId" value="${listValue.id}" />
+		
 		</td>
+		
+		
 		<td>
 		${listValue.bookedBy}
 		</td>
 		
-		<td>
 		
-		</td>
+	
 		<td>
 		<c:if test="${not listValue.isBooked}">
 		
 		
-		<a data-id="${listValue.bookedTime}" title="Add this item" class="open-AddBookDialog">Book Slot</a>
+		<a data-id="${listValue.id}" title="Add this item" class="open-AddBookDialog">Book Slot</a>
 		
 		
 		</c:if>
@@ -164,6 +176,7 @@
 		</tr>
 		
 		</c:forEach>
+		</tbody>
 	</table>
 	
 </div>

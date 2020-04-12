@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,10 +22,10 @@ public class TimeTable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date selectedDay;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	 @OneToMany(mappedBy="timeTable", cascade=CascadeType.ALL)
 	private List<Slot> slot;
 
 	public Date getselectedDay() {

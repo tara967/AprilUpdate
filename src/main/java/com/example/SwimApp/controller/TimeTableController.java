@@ -2,6 +2,9 @@ package com.example.SwimApp.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -40,35 +43,22 @@ public class TimeTableController {
     		@RequestBody Map<String, String> json
     ) throws ParseException {
 		
-		String bookedTime=json.get("bookedTime");
+	
 		String personName=json.get("personName");
-System.out.println(bookedTime);
-		
-		System.out.println(personName);
-		Slot slot=new Slot();
-		
-		SimpleDateFormat sdf3 = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+		String slotId=json.get("slotId");
+        
+		Slot slot=timeTableService.findSlotById(Long.parseLong(slotId));
 
-	    Date date = null;
-		try {
-			date = sdf3.parse(bookedTime);
-
-			slot.setBookedTime(date);
+		System.out.println(slotId);
+		
 			slot.setBookedBy(personName);
 			slot.setIsBooked(true);
 			
-			TimeTable timeTable=new TimeTable();
 			
-			timeTable.setSlot(Arrays.asList(slot));
-			timeTable.setselectedDay(date);
-			
-			timeTableService.save(timeTable);
-		} catch (ParseException ex) {
-		    System.out.println(ex.toString());
-		}
+			timeTableService.updateSlot(slot);
 		
-		
-		return personName;
+	
+		return "Slot updated";
      
     }
 	
@@ -77,41 +67,25 @@ System.out.println(bookedTime);
 	public ModelAndView registration() {
 		ModelAndView model = new ModelAndView("/timeTable");
 
-		Slot slot=new Slot();
 
-		slot.setIsBooked(true);
-		slot.setBookedBy("Tara");
-		slot.setBookedTime(new Date(""));
+        TimeTable timeTable=timeTableService.findById((long) 1);
 
-
-
-		Slot slot1=new Slot();
-
-		slot1.setIsBooked(false);
-		slot1.setBookedBy("sarwar");
-		slot1.setBookedTime(new Date());
-
-		Slot slot2=new Slot();
-
-		slot2.setIsBooked(true);
-		slot2.setBookedBy("nial");
-		slot2.setBookedTime(new Date());
-
-
-		Slot slot3=new Slot();
-
-		slot3.setIsBooked(false);
-		slot3.setBookedBy("colm");
-		slot3.setBookedTime(new Date());
-
-
-
-
-		List<Slot> slotList=Arrays.asList(slot,slot1,slot2,slot3);
-
+        
+        List<Slot> slotList=new ArrayList<Slot>();
+		for(Slot slots : timeTable.getSlot())
+        {
+        	
+			LocalDate localDate = slots.getBookedTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			int month = localDate.getMonth().getValue();
+			int year=localDate.getYear();
+			slots.getBookedTime().setMonth(month);
+			slots.getBookedTime().setYear(year);
+			
+    		slotList.add(slots);
+    		
+    		
+        }
 		model.addObject(slotList);
-		//model.addObject("userForm", new User());
-		//model.addObject("roles", roles.stream().map(Role::getName).collect(Collectors.toList()));
 		return model;
 	}
 
