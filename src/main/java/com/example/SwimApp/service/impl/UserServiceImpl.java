@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	//BcryptPasswordEncoder is a given Spring public class
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 

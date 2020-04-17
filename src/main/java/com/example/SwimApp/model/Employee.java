@@ -5,6 +5,7 @@ public class Employee {
 	private String empId;
 	private String empName;
 
+	//getters and setters for empId and empName automatically created
 	public String getEmpId() {
 		return empId;
 	}

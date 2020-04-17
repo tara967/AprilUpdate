@@ -5,17 +5,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
+
+
   <head>
       <meta charset="utf-8">
        <meta name="_csrf" content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     
-      <title>Pick a slot from TimeTable</title>
+    
 
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
@@ -23,9 +25,7 @@
       $(function(){
     	  $(".open-AddBookDialog").click(function(){
     	     $('#bookId').val($(this).data('id'));
-    	     
-    	   
-    	     
+    	         
     	    $("#addBookDialog").modal("show");
     	  });
     	});
@@ -49,11 +49,9 @@
     	});
      
       
-      
       function fire_ajax_submit() {
 
     	    var search = {}
-    	    
     	    
     	    search["slotId"] = $("#bookId").val();
 			search["personName"] = $("#personName").val();
@@ -64,7 +62,8 @@
     	    $.ajax({
     	        type: "POST",
     	        contentType: "application/json",
-    	        url: "/timeTable",
+    	        url: "/timeTable", //its sending a post request to this mapping
+    	        
     	        data: JSON.stringify(search),
     	        dataType: 'json',
     	        cache: false,
@@ -73,9 +72,11 @@
 
     	            var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
     	                + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
-    	            $('#feedback').html(json);
+    	            $('#feedback').html(json);		
+    	            
+    	            //passes back the json data
 
-    	            console.log("SUCCESS : ", data);
+    	            console.log("SUCCESS : ", data);	//
     	            $("#btn-search").prop("disabled", false);
 
     	        },
@@ -90,7 +91,6 @@
 
     	        }
     	    });
-
     	}
       
   </script>
@@ -107,7 +107,7 @@
     <div class="modal-content">
 <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Modal header</h4>
+          <h4 class="modal-title">Book slot for Weekend 12/13th April</h4>
       </div>
       <div class="modal-body">
 
@@ -127,8 +127,14 @@
 
 
 <div>
+	
 	<jsp:include page="menu.jsp" />
-	     
+	<div>
+	<img src="https://dracula-tours.irish/wp-content/uploads/2019/01/Book-Now-Button-Transparent-PNG-600x209.png" 
+	alt="book now" style="width:200px;height:150px;">
+	<br>
+	<!title><b>Pick a slot from TimeTable (Weekend 12th/13th April 2020)</b></title>
+	 </div>    
 <table border="1">
 
   <thead>
@@ -158,6 +164,7 @@
 		
 	
 		<td>
+		
 		<c:if test="${not listValue.isBooked}">
 		
 		
@@ -180,10 +187,25 @@
 	</table>
 	
 </div>
+<div>
+	
+	<script src="app.js"></script>
+	
+</div>
+<div class="container">
+<form action="" method="post">
+
+<label> Name:<br><input type="text" name="name"></label>
+
+<label> Message: <br><textarea  name="mes"></textarea></label><br>
+
+<input type="submit" name="post" value="Post">
+
+</form>
+</div>
 
 </body>
 
- 
 
-  </body>
+ </body>
 </html>

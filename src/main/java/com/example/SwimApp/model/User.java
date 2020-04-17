@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="user")
 public class User {
-	
+	//implementation. same as in jsp
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -22,6 +22,7 @@ public class User {
 	
 	private String password;
 	
+	//this field is not to be persisted in the DataBase
 	@Transient
 	private String passwordConfirm;
 	
@@ -31,6 +32,7 @@ public class User {
 	@ManyToMany
 	private List<Role> roles;
 
+	//setters and getters defined below for respective variables
 	public String getUsername() {
 		return username;
 	}

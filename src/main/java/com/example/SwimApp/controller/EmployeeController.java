@@ -13,13 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.SwimApp.model.Employee;
 import com.example.SwimApp.service.EmployeeService;
 
-
+//@controller, spring will autodetect implementation classes
 @Controller
 public class EmployeeController {
-
+	
+	//autowired by Springs dependency injection facilities
 	@Autowired
 	EmployeeService employeeService;
-
+	
+	//maps web requests onto methods in request handling classes
 	@RequestMapping("/")
 	public ModelAndView firstPage() {
 		return new ModelAndView("welcome");
@@ -30,7 +32,7 @@ public class EmployeeController {
 	public ModelAndView loginPage() {
 		return new ModelAndView("welcome");
 	}
-
+	
 	@RequestMapping(value = "/addNewEmployee", method = RequestMethod.GET)
 	public ModelAndView show() {
 		return new ModelAndView("addEmployee", "emp", new Employee());

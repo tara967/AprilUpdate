@@ -38,44 +38,41 @@ public class TimeTableController {
 	@Autowired
 	TimeTableService timeTableService;
 	
+	//when post request its trying to open this function
 	@RequestMapping(value = "/timeTable", method = RequestMethod.POST)
 	@ResponseBody
     public String saveHosting(
     		@RequestBody Map<String, String> json
     ) throws ParseException {
 		
-	
+	//passed from ajax request puts name of person and the slot they booked
+		//just updates the slot with the person name entered and books slot to be booked
 		String personName=json.get("personName");
 		String slotId=json.get("slotId");
         
 		Slot slot=timeTableService.findSlotById(Long.parseLong(slotId));
 
 		System.out.println(slotId);
-		
+		//sets slot to true because it is booked
 			slot.setBookedBy(personName);
 			slot.setIsBooked(true);
 			
-			
 			timeTableService.updateSlot(slot);
-		
 	
 		return "Slot updated";
      
     }
-	
-
+	//when called, prints all slots by finsing timetable with id=1 because i only have one
+	//to have multiple, will get all of them and loop through all of them again to get timetable
 	@GetMapping("/timeTable")
 	public ModelAndView registration() {
 		ModelAndView model = new ModelAndView("/timeTable");
 
-
         TimeTable timeTable=timeTableService.findById((long) 1);
-
         
         List<Slot> slotList=new ArrayList<Slot>();
 		for(Slot slots : timeTable.getSlot())
         {
-        	
 			LocalDate localDate = slots.getBookedTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			
 			Calendar cal = Calendar.getInstance();
@@ -87,8 +84,6 @@ public class TimeTableController {
 			slots.getBookedTime().setYear(year);
 			
     		slotList.add(slots);
-    		
-    		
         }
 		model.addObject(slotList);
 		return model;
